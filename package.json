@@ -1,0 +1,11 @@
+{
+  "name": "translate",
+  "version": "0.1",
+  "description": "Translate a source object to a target object",
+  "main": "index.js",
+  "author": "Brandon Fleming",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}

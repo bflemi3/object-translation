@@ -1,0 +1,41 @@
+{
+  "serverToClient": [
+    {
+      "source": "pageInfo",
+      "properties": [ "page", "pageSize" ]
+    },
+    {
+      "source": "pageInfo.count",
+      "target": "count"
+    },
+    {
+      "source": "rows",
+      "items": [
+        "custom_number",
+        "owner",
+        {
+          "target": "system",
+          "properties": [
+            "mac_address_.*",
+            {
+              "source": "serial_number",
+              "target": "serialNumber"
+            },
+            {
+              "source": "system_(.*)",
+              "target": "$1"
+            },
+            {
+              "target": "constraints",
+              "properties": [ "location_max", "terminal_max", "^max_.*" ]
+            },
+            {
+              "target": "softwareOptions",
+              "properties": [ "^byte0_.*" ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
