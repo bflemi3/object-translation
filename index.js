@@ -3,7 +3,7 @@ const serverData = require('./data/server.json'),
     _ = require('lodash');
 
 const result = translate(map, {}, serverData);
-console.log(JSON.stringify(result));
+console.log(JSON.stringify(result, null, 4));
 
 /**
  * Given the clientServerMap, a client object and the data from the server, will recursively translate the server data
