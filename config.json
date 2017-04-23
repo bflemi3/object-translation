@@ -31,7 +31,7 @@
             },
             {
               "target": "softwareOptions",
-              "properties": [ "^byte0_.*" ]
+              "properties": [ "^byte[/d]+_.*" ]
             }
           ]
         }
