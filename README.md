@@ -1,4 +1,4 @@
-##Translate a source object to a target object
+# Translate a source object to a target object
 
 A simple translation example...
 
@@ -39,10 +39,10 @@ Create the following set of translation rules:
 ]
 ```
 
-##Rules
+## Rules
 Translation rules dictate how the source is translated into the target. A rule can be as simple as a string defining the [source](#source) key(s) or an object describing a more complex rule.
 
-###source<a name="source"></a>
+### source<a name="source"></a>
 `source` describes the key, or set of keys to match for this particular rule. Source can be in the following formats:
 * {String} The name of the key to match from the source object
 * {String} A regex expression that will match one or more keys from the source object
@@ -56,7 +56,7 @@ If the translation rule only contains a `source` property, then rule can just be
 ]
 ```
 
-###target<a name="target"></a>
+### target<a name="target"></a>
 `target` describes the key, or set of keys to be created in the target object. Target can be in the following formats:
 * {String} The name of the key to create
 * {String} A replacement pattern as described in [String.prototype.replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter) for the second argument `newSubStr`
