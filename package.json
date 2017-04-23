@@ -1,6 +1,6 @@
 {
   "name": "translate",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Translate a source object to a target object",
   "main": "index.js",
   "author": "Brandon Fleming",
