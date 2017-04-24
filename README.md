@@ -47,6 +47,7 @@ Translation rules dictate how the source is translated into the target. A rule c
 * {String} The name of the key to match from the source object
 * {String} A regex expression that will match one or more keys from the source object
 * {String} A dot notation expression (ie: 'pageInfo.count' ) that will be used to do a deep match on one key from the source object
+
 If `source` is given by itself in the translation rule, the names of the matching keys will also be the names of target keys.
 If the translation rule only contains a `source` property, then rule can just be a string that represents the `source`. For example, the following two rules are the same:
 ```javascript
@@ -60,6 +61,7 @@ If the translation rule only contains a `source` property, then rule can just be
 `target` describes the key, or set of keys to be created in the target object. `target` can be in the following formats:
 * {String} The name of the key to create
 * {String} A replacement pattern as described in [String.prototype.replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter) for the second argument `newSubStr`
+
 If the `target` is not found in the translation rule, the [source](#source) property will be used.
 
 ### properties<a name="properties"></a>
