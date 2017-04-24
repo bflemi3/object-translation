@@ -1,9 +1,21 @@
 {
   "name": "translate",
   "version": "1.0.0",
+  "keywords": ["translate", "object mapping", "object translation", "translation", "convert object"],
+  "bugs": {
+    "url": "https://github.com/bflemi3/translate/issues",
+    "email": "brand.fleming@gmail.com"
+  },
   "description": "Translate a source object to a target object",
   "main": "index.js",
-  "author": "Brandon Fleming",
+  "author": {
+    "name": "Brandon Fleming",
+    "email": "brand.fleming@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bflemi3/translate.git"
+  },
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.4"
