@@ -1,24 +1,19 @@
-const serverData = require('./data/server.json'),
-    map = require('./config.json').serverToClient,
-    _ = require('lodash');
-
-const result = translate(map, {}, serverData);
-console.log(JSON.stringify(result, null, 4));
+const _ = require('lodash');
 
 /**
- * Given the clientServerMap, a client object and the data from the server, will recursively translate the server data
- * into a client object using the mapping
+ * Given a map (a set of translation rules), a target object and the source object, will recursively translate the source data
+ * into a target object using the map
  * @param map
  * @param target
  * @param source
  * @returns {Object}
  */
-function translate(map, target, source) {
+module.exports = function translate(map, source, target = {}) {
     if(_.isUndefined(map)) return source;
 
     if(Array.isArray(map)) {
         for(let item of map)
-            translate(item, target, source);
+            translate(item, source, target);
 
         return target;
     }
@@ -33,16 +28,13 @@ function translate(map, target, source) {
             if(!Array.isArray(sourceItems))
                 throw new Error(`Unable to translate node '${key}'. The map translation object is defined with the items property, as a result the data being translated must be an array.`);
 
-            target[key] = [];
-            for(let item of sourceItems)
-                target[key].push(translate(map.items, {}, item));
-
+            target[key] = sourceItems.map(i => translate(map.items, i));
             return target;
         }
 
         // handle map.properties - properties describes the properties of an object
         if(map.properties && map.properties.length) {
-            target[key] = translate(map.properties, {}, getValue(source, sourceKey));
+            target[key] = translate(map.properties, getValue(source, sourceKey));
             return target;
         }
 
