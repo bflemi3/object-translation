@@ -37,5 +37,17 @@
         }
       ]
     }
+  ],
+  "clientToServer": [
+    "name",
+	  "age",
+	  {
+		  "source": "hair",
+		  "target": "hair_$1"
+	  },
+	  {
+		  "source": "stats",
+		  "target": "$1"
+	  }
   ]
 }
