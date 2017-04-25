@@ -23,7 +23,7 @@ Translate the source into:
 }
 ```
 
-Create the following set of translation rules:
+By creating the following set of translation rules:
 ```javascript
 [
     'name',
