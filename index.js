@@ -1,104 +1,22 @@
-const _ = require('lodash');
+const _ = require('lodash'),
+    ruleFactory = require('./ruleFactory');
 
 /**
  * Given a map (a set of translation rules), a target object and the source object, will recursively translate the source data
  * into a target object using the map
- * @param map
+ * @param rawRules
  * @param target
  * @param source
  * @returns {Object}
  */
-module.exports = function translate(map, source, target = {}) {
-    if(_.isUndefined(map)) return source;
+module.exports = function translate(rawRules, source, target = {}) {
+    if (_.isUndefined(rawRules)) return source;
 
-    if(Array.isArray(map)) {
-        for(let item of map)
-            translate(item, source, target);
+    if(!Array.isArray(rawRules) || !rawRules.length)
+        throw new TypeError(`Invalid argument. The translation rules provided must be an array of at least on translation rule.`);
 
-        return target;
-    }
-
-    if(_.isPlainObject(map)) {
-        const [ sourceKey, targetKey ] = [ map.source, map.target ],
-            key = targetKey || sourceKey;
-
-        // handle map.items - items describes the objects of an array
-        if(map.items && map.items.length) {
-            const sourceItems = getValue(source, sourceKey);
-            if(!Array.isArray(sourceItems))
-                throw new Error(`Unable to translate node '${key}'. The map translation object is defined with the items property, as a result the data being translated must be an array.`);
-
-            target[key] = sourceItems.map(i => translate(map.items, i));
-            return target;
-        }
-
-        // handle map.properties - properties describes the properties of an object
-        if(map.properties && map.properties.length) {
-            target[key] = translate(map.properties, getValue(source, sourceKey));
-            return target;
-        }
-
-        if(!map.source)
-            throw new Error(`Unable to translate node '${key}'. The map translation object is defined without 'properties', 'items' or 'source' properties. At least one must be defined.`);
-
-        return setValue(source, target, key, sourceKey, targetKey);
-    }
-
-    if(_.isString(map))
-        return setValue(source, target, map, map);
+    const rules = rawRules.map(r => ruleFactory(r)).map(r => r.translate(source));
+    Object.assign(target, ...rules);
 
     return target;
-}
-
-/**
- * Given a key and data, tries to get the value(s) of the matching key
- * @param data
- * @param key {String} - Can be a regular expression, dot notation or key name
- * @param portion {String} Given a portion string, will return the portion of the matching key. See String.prototype.replace
- * (second argument) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
- * @returns {*}
- */
-function getValue(data, key, portion) {
-    if(_.isUndefined(data)) throw new TypeError(`Invalid argument. 'data' is undefined`);
-
-    if(!key) return data;
-
-    let value = _.get(data, key);
-    if(!_.isUndefined(value)) return value;
-
-    // finally key could be regex, try to get values for matching keys
-    if(!_.isPlainObject(data))
-        throw new Error(`Unable to find values for given regex expression '${key}'. The data to match against must be an object.`);
-
-    value = [];
-    const regex = new RegExp(key);
-    for(let [k, v] of Object.entries(data)) {
-        if(!regex.test(k)) continue;
-
-        if(!portion) {
-            value.push([k, v]);
-            continue;
-        }
-
-        value.push([k, v, k.replace(regex, portion)]);
-    }
-
-    return value;
-}
-
-function setValue(source, target, key, sourceKey, targetKey) {
-    const values = getValue(source, sourceKey, targetKey);
-    if(!Array.isArray(values)) {
-        target[key] = values;
-        return target;
-    }
-
-    for(let [k, value, newTargetKey] of values) {
-        if(newTargetKey) {
-            target[newTargetKey] = value;
-            continue;
-        }
-        target[k] = value;
-    }
-    return target;
-}
+};

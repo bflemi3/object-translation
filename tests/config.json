@@ -11,7 +11,7 @@
     {
       "source": "rows",
       "items": [
-        "custom_number",
+        "customer_number",
         "owner",
         {
           "target": "system",
@@ -27,11 +27,11 @@
             },
             {
               "target": "constraints",
-              "properties": [ "location_max", "terminal_max", "^max_.*" ]
+              "properties": [ ".*_max$", "^max_.*" ]
             },
             {
               "target": "softwareOptions",
-              "properties": [ "^byte[/d]+_.*" ]
+              "properties": [ "^byte[\\d]+_.*" ]
             }
           ]
         }
@@ -39,15 +39,53 @@
     }
   ],
   "clientToServer": [
-    "name",
-	  "age",
-	  {
-		  "source": "hair",
-		  "target": "hair_$1"
-	  },
-	  {
-		  "source": "stats",
-		  "target": "$1"
-	  }
+    {
+      "source": "count",
+      "target": "pageInfo.count"
+    },
+    {
+      "source": "rows",
+      "items": [
+        "customer_number",
+        "owner",
+        {
+          "source": "system",
+          "target": [
+            "mac_address_.*",
+            {
+              "source": "serialNumber",
+              "target": "serial_number"
+            },
+            {
+              "source": "name",
+              "target": "system_name"
+            },
+            {
+              "source": "version",
+              "target": "system_version"
+            },
+            {
+              "source": "constraints",
+              "target": [ "location_max", "terminal_max", "^max_.*" ]
+            },
+            {
+              "source": "softwareOptions",
+              "target": [ "^byte[/d]+_.*" ]
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+    {
+      "source": "hair",
+      "target": "hair_$1"
+    },
+    {
+      "source": "stats",
+      "target": "$1"
+    }
   ]
 }
