@@ -1,4 +1,4 @@
-# Translate a source object to a target object
+# An ES6 node module to translate a source object to a target object
 
 A simple translation example...
 
