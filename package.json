@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "keywords": ["translate", "object mapping", "object translation", "translation", "convert object", "translate object"],
   "bugs": {
-    "url": "https://github.com/bflemi3/translate/issues",
+    "url": "https://github.com/bflemi3/object-translation/issues",
     "email": "brand.fleming@gmail.com"
   },
   "description": "An ES6 node module to translate a source object to a target object",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bflemi3/translate.git"
+    "url": "https://github.com/bflemi3/object-translation.git"
   },
   "license": "ISC",
   "dependencies": {
