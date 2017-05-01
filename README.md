@@ -1,17 +1,23 @@
 # An ES6 node module to translate a source object to a target object
 
+## Installation
+
+`npm install object-translation`
+
+## How To Use
+
 A simple translation example...
 
 Given the following source object:
 ```javascript
-{
+const source = {
     name: 'Steve',
     age: 35,
     hair_color: 'brown',
     hair_length: 'short',
     height: `6'1"`,
     weight: 170    
-}
+};
 ```
 Translate the source into: 
 ```javascript
@@ -25,18 +31,21 @@ Translate the source into:
 
 By creating the following set of translation rules:
 ```javascript
-[
-    'name',
-    'age',
-    {
-        target: 'hair',
-        properties: ['hair_.*']        
-    },
-    {
-        target: 'stats',
-        properties: ['height', 'weight']
-    }
-]
+const translate = require('object-translation'),
+    rules = [
+        'name',
+        'age',
+        {
+            target: 'hair',
+            properties: ['hair_.*']        
+        },
+        {
+            target: 'stats',
+            properties: ['height', 'weight']
+        }
+    ];
+
+console.log(JSON.stringify(translate(source, rules));
 ```
 
 ## Rules
