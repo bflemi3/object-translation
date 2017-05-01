@@ -1,7 +1,7 @@
 {
-  "name": "translate",
+  "name": "object-translation",
   "version": "1.0.1",
-  "keywords": ["translate", "object mapping", "object translation", "translation", "convert object"],
+  "keywords": ["translate", "object mapping", "object translation", "translation", "convert object", "translate object"],
   "bugs": {
     "url": "https://github.com/bflemi3/translate/issues",
     "email": "brand.fleming@gmail.com"
