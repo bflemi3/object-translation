@@ -1,4 +1,5 @@
-const Rule = require('./Rule');
+const Rule = require('./Rule'),
+    _ = require('lodash');
 
 module.exports = class PropertiesRule extends Rule {
     constructor(rawRule, childRules) {
@@ -14,7 +15,7 @@ module.exports = class PropertiesRule extends Rule {
         const result = { [this.targetKey]: {} },
             { value, isRegex } = this.getSourceValue(data);
 
-        Object.assign(result[this.targetKey], ...this.rules.map(rule => rule.translate(value)));
+        _.merge(result[this.targetKey], ...this.rules.map(rule => rule.translate(value)));
         return result;
     }
 };

@@ -1,0 +1,32 @@
+{
+  "pageInfo": {
+    "page": 1,
+    "pageSize": 21
+  },
+  "count": 1,
+  "rows": [
+    {
+      "customer_number": 0,
+      "owner": "                 HEB TEST SYSTEM",
+      "system": {
+        "mac_address_1": "    ",
+        "mac_address_2": "    ",
+        "serialNumber": 1,
+        "name": " ACR-2000",
+        "version": " 4.1",
+        "constraints": {
+          "location_max": 1,
+          "terminal_max": 5,
+          "max_omni_7000": 0,
+          "max_alternate_procs": 0,
+          "max_pos_lanes": 0
+        },
+        "softwareOptions": {
+          "byte0_bit1": "N",
+          "byte0_bit2": "N",
+          "byte0_bit3": "Y"
+        }
+      }
+    }
+  ]
+}

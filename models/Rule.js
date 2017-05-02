@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-class Value {
+class SourceValue {
     constructor(value, isRegex = false) {
         this.value = value;
         this.isRegex = isRegex;
@@ -8,7 +8,7 @@ class Value {
 }
 
 module.exports = class Rule {
-    constructor(rawRule) {
+    constructor(rawRule, childRules) {
         if(_.isPlainObject(rawRule)) {
             if(rawRule.source) this.source = rawRule.source;
             if(rawRule.target) this.target = rawRule.target;
@@ -17,18 +17,18 @@ module.exports = class Rule {
         if(_.isString(rawRule))
             this.source = rawRule;
 
-        // if(!this.source)
-        //     throw new TypeError(`Unable to construct translation rule. Invalid translation rule. The rule must contain at least a source as a string or a property on an object.`);
+        if(Array.isArray(childRules))
+            this.rules = childRules;
 
-        this.targetKey = this.target || this.source;
+        this.targetKey = Array.isArray(this.target) ? undefined : (this.target || this.source);
     }
 
     getSourceValue(data) {
-        if(!this.source) return new Value(data);
+        if(!this.source) return new SourceValue(data);
 
         // handle when this.source is dot notation or explicit
         let value = _.get(data, this.source);
-        if(!_.isUndefined(value)) return new Value(value);
+        if(!_.isUndefined(value)) return new SourceValue(value);
 
         // handle regex
         if(!_.isPlainObject(data))
@@ -38,11 +38,15 @@ module.exports = class Rule {
         value = Object.entries(data)
             .filter(([k, v]) => regex.test(k))
             .map(([k, v]) => ({ [this.target ? k.replace(regex, this.target) : k]: v }));
-        return new Value(value, true);
+        return new SourceValue(value, true);
     }
 
     translate(data) {
         const { value, isRegex } = this.getSourceValue(data);
-        return isRegex ? Object.assign({}, ...value) : { [this.targetKey]: value };
+
+        if(Array.isArray(this.rules))
+            return _.merge({}, ...this.rules.map(r => r.translate(value)));
+
+        return isRegex ? _.merge({}, ...value) : _.set({}, this.targetKey, value);
     }
 };

@@ -39,6 +39,7 @@
     }
   ],
   "clientToServer": [
+    "pageInfo",
     {
       "source": "count",
       "target": "pageInfo.count"
@@ -70,7 +71,7 @@
             },
             {
               "source": "softwareOptions",
-              "target": [ "^byte[/d]+_.*" ]
+              "target": [ "^byte[\\d]+_.*" ]
             }
           ]
         }

@@ -1,4 +1,5 @@
-const Rule = require('./Rule');
+const Rule = require('./Rule'),
+    _ = require('lodash');
 
 module.exports = class ItemsRule extends Rule {
     constructor(rawRule, childRules) {
@@ -17,6 +18,6 @@ module.exports = class ItemsRule extends Rule {
             throw new TypeError(`Unable to translate rule { ${key}: ${this[key]} }. Source data is not an array.`);
         }
 
-        return { [this.targetKey]: value.map(v => Object.assign({}, ...this.rules.map(r => r.translate(v)))) };
+        return { [this.targetKey]: value.map(v => _.merge({}, ...this.rules.map(r => r.translate(v)))) };
     }
 };

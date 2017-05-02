@@ -16,7 +16,7 @@ module.exports = function translate(rawRules, source, target = {}) {
         throw new TypeError(`Invalid argument. The translation rules provided must be an array of at least on translation rule.`);
 
     const rules = rawRules.map(r => ruleFactory(r)).map(r => r.translate(source));
-    Object.assign(target, ...rules);
+    _.merge(target, ...rules);
 
     return target;
 };

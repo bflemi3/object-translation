@@ -14,5 +14,9 @@ module.exports = function ruleFactory(rawRule) {
     if(rawRule.items)
         return new ItemsRule(rawRule, rawRule.items.map(i => ruleFactory(i)));
 
-    return new Rule(rawRule);
+    let childRules;
+    if(Array.isArray(rawRule.target))
+        childRules = rawRule.target.map(r => ruleFactory(r));
+
+    return new Rule(rawRule, childRules);
 };
