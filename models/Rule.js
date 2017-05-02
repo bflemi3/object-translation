@@ -51,6 +51,14 @@ module.exports = class Rule {
         if(Array.isArray(this.rules))
             return _.merge({}, ...this.rules.map(r => r.translate(value)));
 
-        return isRegex ? _.merge({}, ...(this.filter ? value.map(this.filter) : value)) : _.set({}, this.targetKey, this.filter ? this.filter(value) : value);
+        if(isRegex) {
+            const result = _.merge({}, ...value);
+            if(!this.filter) return result;
+
+            Object.entries(result).forEach(([key, value]) => result[key] = this.filter.exec(value));
+            return result;
+        }
+
+        return _.set({}, this.targetKey, this.filter ? this.filter.exec(value) : value);
     }
 };
