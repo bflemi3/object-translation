@@ -12,7 +12,10 @@
       "source": "rows",
       "items": [
         "customer_number",
-        "owner",
+        {
+          "source": "owner",
+          "filter": { "find": "\\s{17}", "replace": "" }
+        },
         {
           "target": "system",
           "properties": [
@@ -48,7 +51,10 @@
       "source": "rows",
       "items": [
         "customer_number",
-        "owner",
+        {
+          "source": "owner",
+          "filter": { "startIndex": 0, "replace": "                 " }
+        },
         {
           "source": "system",
           "target": [

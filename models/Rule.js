@@ -1,4 +1,5 @@
-const _ = require('lodash');
+const _ = require('lodash'),
+    Filter = require('./Filter');
 
 class SourceValue {
     constructor(value, isRegex = false) {
@@ -19,6 +20,9 @@ module.exports = class Rule {
 
         if(Array.isArray(childRules))
             this.rules = childRules;
+
+        if(rawRule.filter)
+            this.filter = new Filter(rawRule.filter);
 
         this.targetKey = Array.isArray(this.target) ? undefined : (this.target || this.source);
     }
@@ -47,6 +51,6 @@ module.exports = class Rule {
         if(Array.isArray(this.rules))
             return _.merge({}, ...this.rules.map(r => r.translate(value)));
 
-        return isRegex ? _.merge({}, ...value) : _.set({}, this.targetKey, value);
+        return isRegex ? _.merge({}, ...(this.filter ? value.map(this.filter) : value)) : _.set({}, this.targetKey, this.filter ? this.filter(value) : value);
     }
 };
