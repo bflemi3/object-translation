@@ -65,14 +65,14 @@
         "customer_number",
         {
           "source": "owner",
-          "filter": { "startIndex": 0, "replace": "                 " }
+          "filter": { "find": ".*", "replace": "                 $&" }
         },
         {
           "source": "system",
           "target": [
             {
               "source": "mac_address_.*",
-              "filter": { "startIndex": 0, "replace": "    " }
+              "filter": { "find": ".*", "replace": "    $&" }
             },
             {
               "source": "serialNumber",
@@ -81,12 +81,12 @@
             {
               "source": "name",
               "target": "system_name",
-              "filter": { "startIndex": 0, "replace": " " }
+              "filter": { "find": ".*", "replace": " $&" }
             },
             {
               "source": "version",
               "target": "system_version",
-              "filter": { "startIndex": 0, "replace": " " }
+              "filter": { "find": ".*", "replace": " $&" }
             },
             {
               "source": "constraints",
@@ -107,17 +107,6 @@
           ]
         }
       ]
-    },
-
-
-
-    {
-      "source": "hair",
-      "target": "hair_$1"
-    },
-    {
-      "source": "stats",
-      "target": "$1"
     }
   ]
 }

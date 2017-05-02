@@ -21,7 +21,7 @@ class FilterRule {
                 throw new TypeError(`${BASE_ERROR_MSG} The 'find' property cannot be defined if the 'startIndex' or 'length' properties are defined.`);
 
             this.startIndex = raw.startIndex || 0;
-            this.length = raw.length || 0;
+            this.length = raw.length;
             this.replace = raw.replace;
             this.method = value => value.replace(value.substr(this.startIndex, this.length), this.replace);
             return;
