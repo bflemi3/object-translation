@@ -12,18 +12,25 @@
       "source": "rows",
       "items": [
         "customer_number",
-        "owner",
+        {
+          "source": "owner",
+          "filter": { "find": "^\\s{17}", "replace": "" }
+        },
         {
           "target": "system",
           "properties": [
-            "mac_address_.*",
+            {
+              "source": "mac_address_.*",
+              "filter": { "find": "^\\s{4}", "replace": "" }
+            },
             {
               "source": "serial_number",
               "target": "serialNumber"
             },
             {
               "source": "system_(.*)",
-              "target": "$1"
+              "target": "$1",
+              "filter": { "find": "^\\s{1}", "replace": "" }
             },
             {
               "target": "constraints",
@@ -31,7 +38,15 @@
             },
             {
               "target": "softwareOptions",
-              "properties": [ "^byte[\\d]+_.*" ]
+              "properties": [
+                {
+                  "source": "^byte[\\d]+_.*",
+                  "filter": [
+                    { "find": "Y", "replace": true },
+                    { "find": "N", "replace": false }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -48,22 +63,30 @@
       "source": "rows",
       "items": [
         "customer_number",
-        "owner",
+        {
+          "source": "owner",
+          "filter": { "find": ".*", "replace": "                 $&" }
+        },
         {
           "source": "system",
           "target": [
-            "mac_address_.*",
+            {
+              "source": "mac_address_.*",
+              "filter": { "find": ".*", "replace": "    $&" }
+            },
             {
               "source": "serialNumber",
               "target": "serial_number"
             },
             {
               "source": "name",
-              "target": "system_name"
+              "target": "system_name",
+              "filter": { "find": ".*", "replace": " $&" }
             },
             {
               "source": "version",
-              "target": "system_version"
+              "target": "system_version",
+              "filter": { "find": ".*", "replace": " $&" }
             },
             {
               "source": "constraints",
@@ -71,22 +94,19 @@
             },
             {
               "source": "softwareOptions",
-              "target": [ "^byte[\\d]+_.*" ]
+              "target": [
+                {
+                  "source": "^byte[\\d]+_.*",
+                  "filter": [
+                    { "find": true, "replace": "Y" },
+                    { "find": false, "replace": "N" }
+                  ]
+                }
+              ]
             }
           ]
         }
       ]
-    },
-
-
-
-    {
-      "source": "hair",
-      "target": "hair_$1"
-    },
-    {
-      "source": "stats",
-      "target": "$1"
     }
   ]
 }

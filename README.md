@@ -25,7 +25,7 @@ Translate the source into:
     name: 'Steve',
     age: 35,
     hair: { color: 'brown', length: 'short' },
-    stats: { height: `6'1"`, weight: 170 }
+    stats: { height: `6'1"`, weight: '170lbs' }
 }
 ```
 
@@ -41,7 +41,13 @@ const translate = require('object-translation'),
         },
         {
             target: 'stats',
-            properties: ['height', 'weight']
+            properties: [
+                'height',
+                {
+                    source: 'weight',
+                    filter: { find: '.*', replace: '$&lbs' }
+                }
+            ]
         }
     ];
 
