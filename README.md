@@ -58,7 +58,8 @@ Lets walk through the collection of translation rules above...
 
 Rule:
 ```javascript
-'name'
+'name',
+'age'
 ```
 Translation: 
 ```javascript
