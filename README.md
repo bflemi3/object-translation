@@ -80,7 +80,7 @@ Translation:
 ```javascript
 { hair_color: 'brown', hair_length: 'short' } --> { hair: { color: 'brown', length: 'short' } }
 ```
-This is a more complex rule that defines a new property called `hair` at the root of the target object. `hair` will be an object since it's defined with the [properties](#properties) property. The [properties](#properties) property is a collection of more rules that are used to create the child properties of `hair`, and since there isn't a `source` defined in this rule, the rules in [properties](#properties) will start matching at the root of the source object.
+This is a more complex rule that defines a new property called `hair` at the root of the target object. `hair` will be an object since it's defined with the [properties](#properties) property. The [properties](#properties) property is a collection of more rules that are used to create the child properties of `hair`, and since there isn't a `source` defined in this rule, the rules in [properties](#properties) will start matching at the root of the source object. To learn more about properties see the [properties](#properties) section under Rules.
 
 Rule:
 ```javascript
@@ -124,8 +124,6 @@ Translation:
 ```
 The first rule, `height`, is a simple translation rule that looks for the property `height` at the root of the source object and creates the property `height` at the root of the target object.
 
-To find more complex examples see the [examples](/bflemi3/object-translation/tree/master/tests) in the tests installed with this module.
-
 Rule:
 ```javascript
 {
@@ -139,13 +137,15 @@ Translation:
 ```
 The second rule of the [properties](#properties) property looks for a property at the root of the source object called `weight` and creates a property at the root of the target object also called `weight`. This rule also defines a [filter](#filter). Filters can be one filter or an array of filters, and are used to modify the transposed target value of the matching keys. This filter `filter: { find: '.*', replace: '$&lbs' }`, uses the regular expression from the `find` property to match the entire value and replaces it with the matched value and "lbs" appended to the end - `170lbs`. To learn more about filters see the [filter](#filter) section under Rules.
 
+To find more complex examples see the [examples](/bflemi3/object-translation/tree/master/tests) in the tests installed with this module.
+
 ## Rules
 Translation rules dictate how the source is translated into the target. A rule can be as simple as a string defining the [source](#source) key(s) or an object describing a more complex rule. Rules can be defined with the following properties:
 
 ### source<a name="source"></a>
 `source` describes the key, or set of keys to match for this particular rule. `source` can be in the following formats:
 * {String} The name of the key to match from the source object
-* {String} A regex expression that will match one or more keys from the source object
+* {String} A regular expression that will match one or more keys from the source object
 * {String} A dot notation expression (ie: 'pageInfo.count' ) that will be used to do a deep match on one key from the source object
 
 If `source` is given by itself in the translation rule, the names of the matching keys will also be the names of target keys.
