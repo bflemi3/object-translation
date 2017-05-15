@@ -13,7 +13,7 @@ module.exports = function translate(rawRules, source, target = {}) {
     if (_.isUndefined(rawRules)) return source;
 
     if(!Array.isArray(rawRules) || !rawRules.length)
-        throw new TypeError(`Invalid argument. The translation rules provided must be an array of at least on translation rule.`);
+        throw new TypeError(`Invalid argument. The translation rules provided must be an array of at least one translation rule.`);
 
     const rules = rawRules.map(r => ruleFactory(r)).map(r => r.translate(source));
     _.merge(target, ...rules);
